@@ -1,33 +1,20 @@
 import random
 import pygame as pg
-
 from tkinter import *
 import tkinter.font as font
 import os
+import button
 
 
-class Button():
-    def __init__(self,x,y,image,scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pg.transform.scale(image,(int(width * scale),int(height * scale)))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
-
-    def draw(self):
-        # draw button on screen
-        screen.blit(self.image,(self.rect.x,self.rect.y))
-
-
-#creating the root window
+# creating the root window
 pg.mixer.pre_init(44100, -16, 2, 2048)
 pg.init()
-screen = pg.display.set_mode((160, 160))
+screen = pg.display.set_mode((170, 160))
 pg.display.set_caption('MP3 Player Premiere')
 
 # Load button images
-start_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\play_button.png').convert_alpha()
-start_button = Button(28,20, start_img, 0.8)
+start_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\play_button2.png').convert_alpha()
+start_button = button.Button(20, 20, start_img, 0.4)
 
 # A list of the music file paths.
 # SONGS = ['file1.ogg', 'file2.ogg', 'file3.ogg']
@@ -45,13 +32,17 @@ pg.mixer.music.set_endevent(SONG_FINISHED)
 pg.mixer.music.load(random.choice(SONGS))
 pg.mixer.music.play(0)
 
+
 def pause():
     pg.mixer.music.pause()
+
 
 def resume():
     pg.mixer.music.unpause()
 
+
 def main():
+    number = 0
     clock = pg.time.Clock()
     song_idx = 0  # The index of the current song.
     done = False
@@ -79,7 +70,16 @@ def main():
                 pg.mixer.music.play(0)
 
         screen.fill((202, 248, 221))
-        start_button.draw()
+
+        # button functions
+        if start_button.draw(screen):
+            number += 1
+            if number % 2 == 0:
+                print('resume')
+                resume()
+            else:
+                print('pause')
+                pause()
 
         pg.display.flip()
         clock.tick(30)
