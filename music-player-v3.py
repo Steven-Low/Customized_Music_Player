@@ -22,12 +22,12 @@ class Button():
 #creating the root window
 pg.mixer.pre_init(44100, -16, 2, 2048)
 pg.init()
-screen = pg.display.set_mode((300, 300))
+screen = pg.display.set_mode((160, 160))
 pg.display.set_caption('MP3 Player Premiere')
 
 # Load button images
-start_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\nice-leaves-pattern-vector.jpg').convert_alpha()
-start_button = Button(50,50, start_img, 0.5)
+start_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\play_button.png').convert_alpha()
+start_button = Button(28,20, start_img, 0.8)
 
 # A list of the music file paths.
 # SONGS = ['file1.ogg', 'file2.ogg', 'file3.ogg']
@@ -45,7 +45,11 @@ pg.mixer.music.set_endevent(SONG_FINISHED)
 pg.mixer.music.load(random.choice(SONGS))
 pg.mixer.music.play(0)
 
+def pause():
+    pg.mixer.music.pause()
 
+def resume():
+    pg.mixer.music.unpause()
 
 def main():
     clock = pg.time.Clock()
