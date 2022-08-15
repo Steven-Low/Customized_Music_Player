@@ -9,12 +9,14 @@ import button
 # creating the root window
 pg.mixer.pre_init(44100, -16, 2, 2048)
 pg.init()
-screen = pg.display.set_mode((170, 160))
+screen = pg.display.set_mode((200, 100))
 pg.display.set_caption('MP3 Player Premiere')
 
 # Load button images
 start_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\play_button2.png').convert_alpha()
-start_button = button.Button(20, 20, start_img, 0.4)
+start_button = button.Button(10, 10, start_img, 0.2)
+forward_img = pg.image.load(r'C:\Users\Huawei\PycharmProjects\Customized_Music_Player\forward.png').convert_alpha()
+forward_button = button.Button(100,10,forward_img, 0.2)
 
 # A list of the music file paths.
 # SONGS = ['file1.ogg', 'file2.ogg', 'file3.ogg']
@@ -48,6 +50,9 @@ def main():
     done = False
     while not done:
         for event in pg.event.get():
+
+            screen.fill((202, 248, 221))
+
             if event.type == pg.QUIT:
                 done = True
             elif event.type == pg.KEYDOWN:
@@ -69,17 +74,22 @@ def main():
                 pg.mixer.music.load(random.choice(SONGS))
                 pg.mixer.music.play(0)
 
-        screen.fill((202, 248, 221))
+            # button functions
+            if start_button.draw(screen):
+                number += 1
+                if number % 2 == 0:
+                    print('resume')
+                    resume()
+                else:
+                    print('pause')
+                    pause()
 
-        # button functions
-        if start_button.draw(screen):
-            number += 1
-            if number % 2 == 0:
-                print('resume')
-                resume()
-            else:
-                print('pause')
-                pause()
+            if forward_button.draw(screen):
+                print('Next song.')
+                song_idx += 1
+                song_idx %= len(SONGS)
+                pg.mixer.music.load(SONGS[song_idx])
+                pg.mixer.music.play(0)
 
         pg.display.flip()
         clock.tick(30)
