@@ -37,7 +37,9 @@ def Pause():
 
 # to stop the  song
 def Stop():
-    Stop.has_been_called = True
+    # when VarInt value == 0, the successive function call
+    # from Shuffle() will be null.
+    root.setvar(name="int",value=0)
     mixer.music.stop()
     songs_list.selection_clear(ACTIVE)
 
@@ -90,8 +92,11 @@ def change(a=0):
 '''
 
 
-def Shuffle():
-    if not Stop.has_been_called:
+# a milestone of selective repetitive function :)
+def Shuffle(counter=0):
+    sync = root.getvar(name="int")
+    if counter and counter == sync:
+        root.setvar(name="int",value=sync+1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
         song = f'D:/melody/{song}'
         mixer.music.load(song)
@@ -99,12 +104,20 @@ def Shuffle():
         audio = MP3(song)
         print(audio.info.length)
         delay = 10  # seconds
-        root.after((int(audio.info.length) + delay) * 1000, Shuffle)
-        print("after is invoked")
+        root.after((int(audio.info.length) + delay) * 1000, Shuffle,counter+1)
+        print("int variable is ",root.getvar(name="int"))
+    elif counter == 0:
+        root.setvar(name="int", value=1)
+        song = songs_list.get(random.randint(0, songs_list.size() - 1))
+        song = f'D:/melody/{song}'
+        mixer.music.load(song)
+        mixer.music.play()
+        audio = MP3(song)
+        print(audio.info.length)
+        delay = 10  # seconds
+        root.after((int(audio.info.length) + delay) * 1000, Shuffle, counter + 1)
+        print("first int variable is ", root.getvar(name="int"))
 
-    else:
-        Stop.has_been_called = False
-        print("reset")
 
 
 # creating the root window
@@ -164,5 +177,11 @@ my_menu.add_cascade(label="Menu", menu=add_song_menu)
 add_song_menu.add_command(label="Add songs", command=addsongs)
 add_song_menu.add_command(label="Delete song", command=deletesong)
 
-Stop.has_been_called = False
+# Tkinter variables
+intvar = IntVar(root, name="int")
+root.setvar(name="int", value=0)
+print("value of IntVar() ", root.getvar(name="int"))
+
+
+
 mainloop()
