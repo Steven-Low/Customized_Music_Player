@@ -104,10 +104,10 @@ def Shuffle(counter=0):
         audio = MP3(song)
         print(audio.info.length)
         delay = 10  # seconds
-        root.after((int(audio.info.length) + delay) * 1000, Shuffle, counter + 1)
+        root.after((int(audio.info.length) + delay) * 1000, Shuffle,counter+1)
         print("int variable is ",root.getvar(name="int"))
     elif counter == 0:
-        root.setvar(name="int", value= sync+1)
+        root.setvar(name="int", value=1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
         song = f'D:/melody/{song}'
         mixer.music.load(song)
@@ -115,7 +115,7 @@ def Shuffle(counter=0):
         audio = MP3(song)
         print(audio.info.length)
         delay = 10  # seconds
-        root.after((int(audio.info.length) + delay) * 1000, Shuffle, sync + 1)
+        root.after((int(audio.info.length) + delay) * 1000, Shuffle, counter + 1)
         print("first int variable is ", root.getvar(name="int"))
 
 
