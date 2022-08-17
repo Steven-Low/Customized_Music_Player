@@ -17,6 +17,9 @@ def addsongs():
         s = s.replace("D:/melody/", "")
         songs_list.insert(END, s)
 
+    # highlight first song in the list (similar to cursor select)
+    songs_list.selection_set(first=0)
+
 
 def deletesong():
     curr_song = songs_list.curselection()
@@ -37,9 +40,10 @@ def Pause():
 
 # to stop the  song
 def Stop():
-    # when VarInt value == 0, the successive function call
+    # increment IntVar,so that successive function call
     # from Shuffle() will be null.
-    root.setvar(name="int",value=0)
+    var = root.getvar(name="int")
+    root.setvar(name="int", value=var + 1)
     mixer.music.stop()
     songs_list.selection_clear(ACTIVE)
 
@@ -53,8 +57,11 @@ def Resume():
 def Previous():
     # to get the selected song index
     previous_one = songs_list.curselection()
-    # to get the previous song index
-    previous_one = previous_one[0] - 1
+    # to get the previous song index, if overflow, jump to last index
+    previous_one = previous_one[0] - 1   # using [] to remove tuple
+    if previous_one < 0:
+        previous_one += songs_list.size()
+
     # to get the previous song
     temp2 = songs_list.get(previous_one)
     temp2 = f'D:/melody/{temp2}'
@@ -70,8 +77,10 @@ def Previous():
 def Next():
     # to get the selected song index
     next_one = songs_list.curselection()
-    # to get the next song index
+    # to get the next song index, if overflow, jump to first index
     next_one = next_one[0] + 1
+    if next_one >= songs_list.size():
+        next_one = 0
     # to get the next song
     temp = songs_list.get(next_one)
     temp = f'D:/melody/{temp}'
@@ -96,28 +105,27 @@ def change(a=0):
 def Shuffle(counter=0):
     sync = root.getvar(name="int")
     if counter and counter == sync:
-        root.setvar(name="int",value=sync+1)
+        root.setvar(name="int", value=sync + 1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
         song = f'D:/melody/{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
-        print(audio.info.length)
-        delay = 10  # seconds
+        print("length:", int(audio.info.length), "s")
+        delay = 20  # seconds
         root.after((int(audio.info.length) + delay) * 1000, Shuffle, counter + 1)
-        print("int variable is ",root.getvar(name="int"))
+        print('auto enroll: ', root.getvar(name="int"))
     elif counter == 0:
-        root.setvar(name="int", value= sync+1)
+        root.setvar(name="int", value=sync + 1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
         song = f'D:/melody/{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
         print(audio.info.length)
-        delay = 10  # seconds
+        delay = 20  # seconds
         root.after((int(audio.info.length) + delay) * 1000, Shuffle, sync + 1)
-        print("first int variable is ", root.getvar(name="int"))
-
+        print('new occasion')
 
 
 # creating the root window
@@ -180,8 +188,5 @@ add_song_menu.add_command(label="Delete song", command=deletesong)
 # Tkinter variables
 intvar = IntVar(root, name="int")
 root.setvar(name="int", value=0)
-print("value of IntVar() ", root.getvar(name="int"))
-
-
 
 mainloop()
