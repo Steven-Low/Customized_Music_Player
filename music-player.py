@@ -2,7 +2,7 @@
 from pygame import mixer
 from tkinter import *
 import tkinter.font as font
-from tkinter import filedialog
+from tkinter import filedialog, simpledialog
 import random
 from mutagen.mp3 import MP3
 
@@ -58,6 +58,9 @@ def Resume():
 
 # Function to navigate from the current song
 def Previous():
+    # remove ongoing occasion from shuffle
+    var = root.getvar(name="int")
+    root.setvar(name="int", value=var + 1)
     # to get the selected song index
     previous_one = songs_list.curselection()
     # to get the previous song index, if overflow, jump to last index
@@ -79,6 +82,9 @@ def Previous():
 
 
 def Next():
+    # remove ongoing occasion from shuffle
+    var = root.getvar(name="int")
+    root.setvar(name="int", value=var + 1)
     # to get the selected song index
     next_one = songs_list.curselection()
     # to get the next song index, if overflow, jump to first index
@@ -110,28 +116,48 @@ def change(a=0):
 def Shuffle(counter=0):
     sync = root.getvar(name="int")
     path = root.getvar(name="str")
+    delay_time = root.getvar(name="int2")
     if counter and counter == sync:
         root.setvar(name="int", value=sync + 1)
-        song = songs_list.get(random.randint(0, songs_list.size() - 1))
+        rand = random.randint(0, songs_list.size() - 1)
+        song = songs_list.get(rand)
+
+        # move highlight area
+        songs_list.selection_clear(0, END)
+        songs_list.activate(rand)
+        songs_list.selection_set(rand)
+
         song = f'{path}{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
         print("length:", int(audio.info.length), "s")
-        delay = 20  # seconds
-        root.after((int(audio.info.length) + delay) * 1000, Shuffle, counter + 1)
+        root.after((int(audio.info.length) + delay_time) * 1000, Shuffle, counter + 1)
         print('auto enroll: ', root.getvar(name="int"))
     elif counter == 0:
         root.setvar(name="int", value=sync + 1)
-        song = songs_list.get(random.randint(0, songs_list.size() - 1))
+        rand = random.randint(0, songs_list.size() - 1)
+        song = songs_list.get(rand)
+
+        # move highlight area
+        songs_list.selection_clear(0, END)
+        songs_list.activate(rand)
+        songs_list.selection_set(rand)
+
         song = f'{path}{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
         print(audio.info.length)
-        delay = 20  # seconds
-        root.after((int(audio.info.length) + delay) * 1000, Shuffle, sync + 1)
+        root.after((int(audio.info.length) + delay_time) * 1000, Shuffle, sync + 1)
         print('new occasion')
+
+
+def delay():
+    # the input dialog
+    USER_INP = simpledialog.askstring(title="Delay Preference",
+                                      prompt="Enter delay time (seconds): ")
+    root.setvar(name="int2",value=int(USER_INP))
 
 
 # creating the root window
@@ -183,6 +209,9 @@ shuffle_button = Button(root, text="Shuffle", width=7, command=Shuffle)
 shuffle_button['font'] = defined_font
 shuffle_button.grid(row=1, column=6)
 
+# delay preference
+
+
 # menu
 my_menu = Menu(root)
 root.config(menu=my_menu)
@@ -190,10 +219,13 @@ add_song_menu = Menu(my_menu)
 my_menu.add_cascade(label="Menu", menu=add_song_menu)
 add_song_menu.add_command(label="Add songs", command=addsongs)
 add_song_menu.add_command(label="Delete song", command=deletesong)
+add_song_menu.add_command(label="Shuffle delay", command=delay)
 
 # Tkinter variables
 intvar = IntVar(root, name="int")
 root.setvar(name="int", value=0)
+intvar2 = IntVar(root, name="int2")
+root.setvar(name="int2", value=20)
 strvar = StringVar(root, name="str")
 
 mainloop()
