@@ -14,9 +14,11 @@ def addsongs():
                                             filetypes=(("mp3 Files", "*.mp3"),))
     # loop through everyitem in the list
     for s in temp_song:
-        s = s.replace("D:/melody/", "")
+        s = s[s.rfind('/')+1:]
+        # s = s.replace("D:/melody/", "")
         songs_list.insert(END, s)
-
+    # copy file path to StrVar
+    root.setvar(name="str",value=temp_song[0][:temp_song[0].rfind('/')+1])
     # highlight first song in the list (similar to cursor select)
     songs_list.selection_set(first=0)
 
@@ -27,8 +29,9 @@ def deletesong():
 
 
 def Play():
+    path = root.getvar(name="str")
     song = songs_list.get(ACTIVE)
-    song = f'D:/melody/{song}'
+    song = f'{path}{song}'
     mixer.music.load(song)
     mixer.music.play()
 
@@ -63,8 +66,9 @@ def Previous():
         previous_one += songs_list.size()
 
     # to get the previous song
+    path = root.getvar(name="str")
     temp2 = songs_list.get(previous_one)
-    temp2 = f'D:/melody/{temp2}'
+    temp2 = f'{path}{temp2}'
     mixer.music.load(temp2)
     mixer.music.play()
     songs_list.selection_clear(0, END)
@@ -82,8 +86,9 @@ def Next():
     if next_one >= songs_list.size():
         next_one = 0
     # to get the next song
+    path = root.getvar(name="str")
     temp = songs_list.get(next_one)
-    temp = f'D:/melody/{temp}'
+    temp = f'{path}{temp}'
     mixer.music.load(temp)
     mixer.music.play()
     songs_list.selection_clear(0, END)
@@ -104,10 +109,11 @@ def change(a=0):
 # a milestone of selective repetitive function :)
 def Shuffle(counter=0):
     sync = root.getvar(name="int")
+    path = root.getvar(name="str")
     if counter and counter == sync:
         root.setvar(name="int", value=sync + 1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
-        song = f'D:/melody/{song}'
+        song = f'{path}{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
@@ -118,7 +124,7 @@ def Shuffle(counter=0):
     elif counter == 0:
         root.setvar(name="int", value=sync + 1)
         song = songs_list.get(random.randint(0, songs_list.size() - 1))
-        song = f'D:/melody/{song}'
+        song = f'{path}{song}'
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
@@ -188,5 +194,6 @@ add_song_menu.add_command(label="Delete song", command=deletesong)
 # Tkinter variables
 intvar = IntVar(root, name="int")
 root.setvar(name="int", value=0)
+strvar = StringVar(root, name="str")
 
 mainloop()
