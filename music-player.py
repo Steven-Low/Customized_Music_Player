@@ -131,9 +131,9 @@ def Shuffle(counter=0):
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
-        print("length:", int(audio.info.length), "s")
+        #print("length:", int(audio.info.length), "s")
         root.after((int(audio.info.length) + delay_time) * 1000, Shuffle, counter + 1)
-        print('auto enroll: ', root.getvar(name="int"))
+        #print('auto enroll: ', root.getvar(name="int"))
     elif counter == 0:
         root.setvar(name="int", value=sync + 1)
         rand = random.randint(0, songs_list.size() - 1)
@@ -148,9 +148,9 @@ def Shuffle(counter=0):
         mixer.music.load(song)
         mixer.music.play()
         audio = MP3(song)
-        print(audio.info.length)
+        #print(audio.info.length)
         root.after((int(audio.info.length) + delay_time) * 1000, Shuffle, sync + 1)
-        print('new occasion')
+        #print('new occasion')
 
 
 def delay():
@@ -158,6 +158,12 @@ def delay():
     USER_INP = simpledialog.askstring(title="Delay Preference",
                                       prompt="Enter delay time (seconds): ")
     root.setvar(name="int2",value=int(USER_INP))
+
+
+def Sleep():
+    timer = simpledialog.askstring(title="Sleep Timer",
+                                      prompt="Enter sleep time (minutes): ")
+    root.after(int(timer)*1000*60,Stop)
 
 
 # creating the root window
@@ -220,6 +226,7 @@ my_menu.add_cascade(label="Menu", menu=add_song_menu)
 add_song_menu.add_command(label="Add songs", command=addsongs)
 add_song_menu.add_command(label="Delete song", command=deletesong)
 add_song_menu.add_command(label="Shuffle delay", command=delay)
+add_song_menu.add_command(label="Sleep", command=Sleep)
 
 # Tkinter variables
 intvar = IntVar(root, name="int")
