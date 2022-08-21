@@ -116,7 +116,7 @@ def change(a=0):
 def Shuffle(counter=0):
     sync = root.getvar(name="int")
     path = root.getvar(name="str")
-    delay_time = root.getvar(name="int2")
+    delay_time = root.getvar(name="delay_time")
     if counter and counter == sync:
         root.setvar(name="int", value=sync + 1)
         rand = random.randint(0, songs_list.size() - 1)
@@ -157,14 +157,28 @@ def delay():
     # the input dialog
     USER_INP = simpledialog.askstring(title="Delay Preference",
                                       prompt="Enter delay time (seconds): ")
-    root.setvar(name="int2",value=int(USER_INP))
+    root.setvar(name="delay_time",value=int(USER_INP))
 
 
 def Sleep():
     timer = simpledialog.askstring(title="Sleep Timer",
                                       prompt="Enter sleep time (minutes): ")
-    root.after(int(timer)*1000*60,Stop)
+    if int(timer) < 0:
+        return
+    stop_time = root.getvar(name="stop_time")
+    root.setvar(name="stop_time",value=stop_time+1)
+    stop_time = root.getvar(name="stop_time")
+    root.after(int(timer)*1000*60,Stop_buffer,stop_time)
 
+def Stop_buffer(n):
+    confirm = root.getvar(name="stop_time")
+    if confirm != n:
+        return1 Q   34]
+        \PO
+    var = root.getvar(name="int")
+    root.setvar(name="int", value=var + 1)
+    mixer.music.stop()
+    songs_list.selection_clear(ACTIVE)
 
 # creating the root window
 root = Tk()
@@ -231,8 +245,10 @@ add_song_menu.add_command(label="Sleep", command=Sleep)
 # Tkinter variables
 intvar = IntVar(root, name="int")
 root.setvar(name="int", value=0)
-intvar2 = IntVar(root, name="int2")
-root.setvar(name="int2", value=20)
+intvar2 = IntVar(root, name="delay_time")
+root.setvar(name="delay_time", value=20)
+intvar3 = IntVar(root, name="stop_time")
+root.setvar(name="stop_time",value=0)
 strvar = StringVar(root, name="str")
 
 mainloop()

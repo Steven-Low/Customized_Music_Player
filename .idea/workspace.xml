@@ -20,10 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed7b535d-594d-4fe1-bbdf-eebdd055ddfc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music-player.py" beforeDir="false" afterPath="$PROJECT_DIR$/music-player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,6 +88,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -104,25 +102,29 @@
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="548" y="175" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1660875271896" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1660876386217">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1660986251913">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1660876386217" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1660876386217">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1660986251913" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1660986251913">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1660876386217" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1660876386217">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1660986251913" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1660986251913">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1660876386217" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1660876386217">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1660986251913" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1660986251913">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1660876386217" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1660986251913" />
     <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1660876384950">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.816@0.0.1536.816" timestamp="1660876384950" />
+    <state x="431" y="137" key="search.everywhere.popup" timestamp="1660983512010">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="431" y="137" key="search.everywhere.popup/0.0.1536.816@0.0.1536.816" timestamp="1660983512010" />
   </component>
 </project>
