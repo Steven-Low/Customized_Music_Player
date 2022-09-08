@@ -173,8 +173,7 @@ def Sleep():
 def Stop_buffer(n):
     confirm = root.getvar(name="stop_time")
     if confirm != n:
-        return1 Q   34]
-        \PO
+        return
     var = root.getvar(name="int")
     root.setvar(name="int", value=var + 1)
     mixer.music.stop()
