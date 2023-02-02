@@ -1,4 +1,4 @@
-# Customized_Music_Player
+# Customized_Music_Player [Windows / Android]
 
 Specialty: </br> 
 - Time delay (in your preference) in between songs/musics shuffle
